@@ -1,0 +1,109 @@
+\documentclass[10pt]{article}
+\usepackage[diary]{aditya}
+
+\title{Diary entry for Brown-Representability}
+\author{Aditya Pahuja}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section{Statement of theorem}
+
+\begin{definition}[category of spaces]
+    \label{def:category-of-spaces}
+    $\mathscr C$ is a \vocab{category of spaces} if
+    it consists of pointed CW complexes
+    (or rather, spaces admitting a CW structure)
+    along with all basepoint-preserving continuous maps as the morphisms,
+    as well as having the property that
+    if $X\in\mathscr C$ and $X'\subseteq X$ is a subcomplex of $X$
+    under some CW structure on $X$, then $X'\in\mathscr C$.
+\end{definition}
+
+Two common categories of spaces we will use:
+$\mathscr C_1$ is the category of all pointed CW complexes
+and $\mathscr C_0$ is the category of all pointed finite CW complexes.
+
+\begin{definition}[proper triad]
+    \label{def:proper-triad}
+    A \vocab{proper triad} of spaces in a category of spaces $\mathscr C$
+    is a triple $(X_1\cup X_2, X_1, X_2)$ such that
+    $X_1,X_2,X_1\cup X_2,X_1\cap X_2\in\mathscr C$
+    and such that the pairs $(X_1,X_1\cap X_2)$ and $(X_2,X_1\cap X_2)$
+    have the homotopy extension property.
+\end{definition}
+
+For $X,Y\in\mathscr C$ define $[X,Y]$ to be the
+set of homotopy classes of pointed maps $X\to Y$.
+Then, we have a contravariant functor $[-,Y]_{\mathscr C}$
+from $\mathscr C$ to sets
+sending $f\colon X\to X'$ to $f^*\colon[X',Y]\to[X,Y]$
+(we will generally omit the subscript $\mathscr C$
+unless the ambient category isn't clear) via $f^*[g] = [g\circ f]$.
+A contravariant functor $\mathscr C\to\mathbf{Set}$
+that is naturally isomorphic to some $[-, Y]$ is called \vocab{representable},
+which is why Brown's representability theorem is called as such.
+
+Let $H\colon\mathscr C\to\mathbf{Set}$ be a contravariant functor.
+For brevity define the following statements:
+\begin{enumerate}
+    \ii[(h)] If $f,g\colon X\to Y$ are homotopic morphisms in $\mathscr C$,
+    then $H(f) = H(g)$.
+    \ii[(e1)] If $p$ is a point then $H(p)$ consists of one element.
+    \ii[(e2)] Let $(X,X_1,X_2)$ be a proper triad.
+    If $u_1\in H(X_1)$ and $u_2\in H(X_2)$ restrict
+    to the same element of $H(X_1\cap X_2)$
+    (i.e. pull back via inclusions to the same thing)
+    then there is an element $v\in H(X)$ which restricts to $u_1$ and $u_2$.
+    Furthermore, if $X_1\cap X_2$ consists of one point, then $v$ is unique.
+    \ii[(c)] $H(S^n)$ is countable for all $n > 0$.
+    \ii[(w)] Let $\bigvee_\alpha S^n_\alpha$ be the wedge
+    of a collection of spheres and
+    $i_\beta\colon S^n_\beta\to\bigvee_\alpha S^n_\alpha$ the inclusion.
+    Then,
+    \begin{equation*}
+	\prod_\alpha H(i)_\alpha\colon H\paren*{\bigvee_\alpha S^n_\alpha}
+	\to \prod_\alpha H(S^n_\alpha)
+    \end{equation*}
+    is an isomorphism.
+    \ii[(l)] (I don't get this one)
+    Suppose $X_1$, $X_2$, \dots is a collection of subcomplexes of
+    $X = \bigcup_{n=1}^\infty X_n\in\mathscr C$
+    with respect to some CW structure on $X$ such that $X^n = X_n$
+    (i think? paper says $X_n^n$).
+    Then there are inclusions $X_n\to X_m$ for $m\ge n$
+    which make the $X_n$ into a directed system, and
+    \begin{equation*}
+        \varprojlim H(i_n)\colon H(X)\to\varprojlim H(X_n)
+    \end{equation*}
+    is an epimorphism. (I think limit makes sense?
+    The $X_i$ colimit to $X$ and then $H$ flippy flips it)
+\end{enumerate}
+
+\begin{lemma}
+    \label{lem:lemma1-1}
+    If $\mathscr C = \mathscr C_0$ and $H$ satisfies (c),
+    then $H$ satisfies (w) and (l).
+\end{lemma}
+
+\begin{theorem}[Brown's representability theorem]
+    \label{thm:brown-rep-thm}
+    If $H\colon\mathscr C\to\mathbf{Set}$ is a contravariant functor
+    and either
+    \begin{enumerate}[(a)]
+        \ii $\mathscr C = \mathscr C_0$ and $H$ satisfies (h), (e), and (c);
+	or
+	\ii $\mathscr C = \mathscr C_1$ and $H$ satisfies
+	(h), (e), (w), and (l),
+    \end{enumerate}
+    then there is a space $Y\in\mathscr C_1$ which is unique
+    up to homotopy type such that $[-,Y]$ is naturally isomorphic to $H$.
+\end{theorem}
+
+How to construct such a $Y$?
+
+\end{document}
+
