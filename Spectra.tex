@@ -1,0 +1,187 @@
+\documentclass[10pt]{article}
+\usepackage[diary]{aditya}
+
+\title{Diary entry for Spectra}
+\author{Aditya Pahuja}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section{What are spectra?}
+(Literal question, not philosophical.)
+\begin{definition}[Spectrum]
+    \label{def:spectrum}
+    A \vocab{spectrum} $X$ is a sequence of based spaces $\{X_n\}_{n\ge0}$
+    and a sequence of maps $\xi_n\colon\Sigma X_n\to X_{n+1}$,
+    called \vocab{bonding maps}. A morphism of spectra
+    $f\colon X\to Y$ is a sequence of maps $f_n\colon X_n\to Y_n$
+    with the obvious commutativity property:
+    \begin{center}
+        \begin{tikzcd}
+	    \Sigma X_n\arrow[r,"\xi_n"] \arrow[d,"\Sigma f_n"]
+	    & X_{n+1}\arrow[d, "f_{n+1}"] \\
+	    \Sigma Y_n\arrow[r, "\eta_n"] & Y_{n+1}
+        \end{tikzcd}
+    \end{center}
+    (This definition is sometimes used instead for so-called ``prespectra''.
+    If we need to distinguish these from other kinds of spectra
+    we will call them ``sequential spectra''.)
+\end{definition}
+Note that we will always work with based spaces here
+unless otherwise specified.
+
+\begin{example}
+    [Zero spectrum]
+    \label{ex:zero-spectrum}
+    The zero spectrum $*$ is the spectrum whose maps
+    spaces are all the singleton spaces, which we will also denote as $*$.
+    Since $\Sigma(*) = *$, there is exactly one choice for the bonding maps.
+    The zero map between two spectra $X$ and $Y$
+    is the unique map factoring through $*$,
+    i.e. sending each $X_n$ to the basepoint of $Y_n$.
+\end{example}
+
+\begin{example}
+    [Suspension spectra]
+    \label{ex:suspension-spectrum}
+    The sphere spectrum $\mathbb S$ is the spectrum
+    whose $n$th space is the sphere $S^n$
+    and whose bonding maps $\xi_n\colon \Sigma S^n\to S^{n+1}$
+    are each the identity map, noting that
+    $\Sigma S^n = S^n\wedge S^1 \cong S^{n+1}$.
+    More generally, for a space $X$, the suspension spectrum
+    $\Sigma^\infty X$ is the spectrum whose $n$th space is
+    $\Sigma^n X$ and the bonding maps
+    $\Sigma\Sigma^n X = \Sigma^{n+1}X\to \Sigma^{n+1}X$ are the identity maps.
+\end{example}
+
+\begin{definition}[Stable homotopy groups]
+    \label{def:stable-homotopy-groups}
+    For a spectrum $X$, the $k$th \vocab{stable homotopy group}
+    of $X$, denoted $\pi_k(X)$ for an integer $k$,
+    is the colimit of the system of abelian groups
+    \begin{equation*}
+	\cdots\too
+	\pi_{n+k}(X_n)\overset\sigma\too \pi_{n+1+k}(\Sigma X_n)
+	\overset{\xi_n}\too \pi_{n+1+k}(X_{n+1})\to\cdots
+    \end{equation*}
+    where $\sigma$ is the map sending $\varphi\colon S^{n+k}\to X_n$
+    to the map $\sigma(\varphi)\colon S^{n+k+1}\to \Sigma X_n$
+    defined by $\sigma(\varphi)(x,t) = \varphi(x)$.
+    (If $k$ is negative then the system is defined starting at $n \ge -k$).
+\end{definition}
+
+To emphasize the last sentence: we can have
+\emph{negative dimensional homotopy groups}!
+In some sense, spectra let us think about ``negative dimensional geometry''.
+
+\begin{example}
+    [Shifted spectra]
+    \label{ex:shifted-spectra}
+    The colimit defining the $k$-th stable homotopy group
+    does not change if one deletes finitely many terms (say the first $N$)
+    from the directed system. Therefore, shifting a spectrum up or down
+    (filling in with singleton spaces or truncating the spectrum
+    respectively to account for indexing) just shifts the homotopy groups.
+    In light of this, for a space $X$ and any integer $d$,
+    define the spectrum $\Sigma^{\infty - d}X$
+    to be the suspension spectrum shifted up $d$ spaces
+    (so down $\abs d$ spaces if $d < 0$),
+    i.e. $(\Sigma^{\infty - d}X)_n = (\Sigma X)_{n-d}$,
+    where $(\Sigma X)_{k} = *$ if $k < 0$.
+    The homotopy groups of $\Sigma^{\infty - d}A$ are
+    $\pi_k(\Sigma^{\infty - d}A) = \pi_{k-d}(\Sigma^\infty A)$.
+
+    The $d$-sphere $\mathbb S^d$ is then defined as
+    $\Sigma^{\infty - d} S^0$, i.e. the spectrum
+    which, when suspended $d$ times, is the usual sphere spectrum
+    of \Cref{ex:suspension-spectrum}.
+\end{example}
+
+A \vocab{degree $k$ element} of a spectrum $X$
+is a map $\varphi\colon S^{n+k}\to X_n$,
+up to identification of $\varphi$ with $\sigma(\varphi)$,
+\question{what does this identification mean}
+and the stable homotopy groups are
+the degree $k$ elements of $X$ up to homotopy.
+
+\begin{definition}[Equivalences of spectra]
+    \label{def:equivalences}
+    A \vocab{stable equivalence} of spectra
+    is a map of spectra inducing isomorphisms on every homotopy groups.
+    Two spectra $X$ and $Y$ are \vocab{stably equivalent}
+    if there is a sequence of spectra $X = X_1$, $X_2$, \dots, $X_{2n} = Y$
+    and stable equivalences $X_1\to X_2$, $X_3\to X_2$, $X_3\to X_4$,
+    \dots, $X_{2n-1}\to X_{2n}$ (the parity doesn't change anything
+    since one can pad out the sequence with copies of $Y$).
+    One says that $X$ and $Y$ are connected by
+    a zig-zag of stable equivalences.
+
+    A \vocab{level equivalences} is a map of spectra $X\to Y$
+    in which each map $X_n\to Y_n$ is a weak equivalence.
+
+    A \vocab{homotopy equivalence} is a map of spectra $f\colon X\to Y$
+    such that there is a map $g\colon Y\to X$
+    with the property that $g\circ f\simeq\operatorname{id}_X$
+    and $f\circ g\simeq\operatorname{id}_Y$ (we will define homotopy later).
+\end{definition}
+
+We can now define stable homotopy theory:
+\vocab{stable homotopy theory} is the study of
+spectra up to stable equivalence.
+
+\begin{example}
+    [Inclusion as stable equivalence]
+    \label{ex:inclusion-is-stable-equivalence}
+    For a spectrum $X$, let $X'$ be the spectrum
+    formed by replacing the first $d$ spaces with singleton sets.
+    The inclusion $X'\into X$ (i.e. the map on each level is the inclusion)
+    is a stable equivalence.
+\end{example}
+
+\begin{example}
+    [Weak contractibility]
+    \label{ex:weakly-contractible}
+    For any spectrum $X$ there are unique maps
+    $*\to X\to *$; if one of these (equivalently both)
+    are stably equivalences, then $X$ is said to be weakly contractible.
+    Note that this depends not only on the spaces in the spectrum
+    but also on the bonding maps; for example,
+    any spectrum can be made weakly contractible
+    by setting the bonding maps to the maps sending $\Sigma X_n$
+    to the basepoint of $X_{n+1}$.
+\end{example}
+
+\begin{example}
+    [Thom spectra]
+    \label{ex:thom-spectra}
+    Recall that the \vocab{Thom space} $T(E)$
+    of a (real) rank $n$ vector bundle $p\colon E\to B$
+    is formed by compactifying each fiber to create an $n$-sphere bundle
+    and then identifying all the points at infinity.
+    Equivalently, $T(E)$ is homeomorphic to $D(E)/S(E)$,
+    where, for a given metric on the vector bundle,
+    $D(E)$ is the unit disk bundle and $S(E) = \partial D(E)$
+    is the unit sphere bundle.
+    For example, the Thom space of a trivial bundle
+    $p\colon \RR^n\times B\to B$ is homeomorphic to
+    $B_+\wedge S^n = \Sigma^n_+B$, where $B_+$ is the space
+    $B\cup\{*\}$ with basepoint $*$
+    (thus in general the Thom space is a ``twisted suspension'' of the base).
+
+    Letting $\eps^q$ be the trivial rank $q$ vector bundle over $B$
+    and $E$ any other vector bundle,
+    observe that $T(E +\eps^q) = T(E\times\RR^q) = \Sigma^q T(E)$.
+    \todo{prove vb fact}
+
+    For another vector bundle $E'$, let $E''$ be such that
+    $E' + E'' = \eps^q$, and form
+    the formal difference $E - E' = E + E'' - E'' - E' = E + E'' - \eps^q$.
+\end{example}
+
+
+\end{document}
+
