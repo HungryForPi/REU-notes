@@ -11,6 +11,98 @@
 \pagebreak
 
 \section{Theory}
+Despite the name of the section,
+I will not be detailed about the mechanics of
+how to define particular differentials
+or how to justify convergence
+or anything of that sort.
+You can get a lot of juice out of just using
+the abundance of exact sequences produced by a spectral sequence!
+
+\subsection{Spectral sequence of a double complex}
+
+\begin{definition}[Double complex, total complex]
+    \label{def:double-complex}
+    A homologically graded \vocab{double complex} of $R$-modules
+    is a collection $E_{j,k}$ of $R$-modules
+    along with maps $d^h\colon E_{j,k}\to E_{j-1,k}$
+    and $d^v\colon E_{j,k}\to E_{j,k-1}$ for each $j,k$ such that
+    $d^h\circ d^h = d^v\circ d^v = d^h\circ d^v + d^v\circ d^h = 0$.
+    The \vocab{total complex} of a double complex $E$
+    is the chain complex $T = \oname{Tot}(E)$ whose $n$th module $T_n$
+    is the product $\prod_{p+q=n}E_{p,q}$,
+    with differential $d^T\colon T_n\to T_{n-1}$ given by
+    setting the $E_{s,t}$ component of $d(x_{p,q})_{p+q=n}$
+    to be the sum $d^hx_{s+1,t} + d^v x_{s,t+1}$;
+    see the diagram below, in which elements of the double complex
+    on the same level are joined by dotted lines.
+    \begin{center}
+        \begin{tikzcd}
+	    E_{s,t+1}\arrow[d]\arrow[dr,dotted,no head]
+	    \\
+	    E_{s,t}\arrow[dr,dotted,no head]
+	    &E_{s+1,t}\arrow[l]\arrow[d]\arrow[dr,dotted,no head]\\
+	    &E_{s+1,t-1}
+	    & E_{s+2,t-1}\arrow[l]
+        \end{tikzcd}
+    \end{center}
+    A cohomologically graded double complex is the
+    obvious dual notion: flip the directions of the differentials
+    so that they increase the degree, and the direction of differentials
+    in the total complex should be adjusted as a result.
+\end{definition}
+We will assume that all of our double complexes live in the first quadrant,
+which as we will see guarantees that our spectral sequence
+``converges'' (in a sense that we will make precise).
+
+\begin{exercise}
+    \label{exer:total-complex-is-chain-complex}
+    Verify that for a (co)homologically graded double complex $E$,
+    the total complex $\oname{Tot}(E)$ is indeed a (co)chain complex.
+\end{exercise}
+
+The spectral sequences of a double complex $E$ are tools for computing
+the homology of the total complex of $E$.
+The idea is that one can approximate the homology
+by successively constructing a chain complex involving the various modules
+that $E_{s,t}$ ``should be able to see''
+(namely the modules along the line $p+q=s+t-1$).
+To this end, a spectral sequence for the double complex
+is defined as follows: one has a sequence of \vocab{pages} $E^r$,
+each of which contains a module for each pair of integers $(s,t)$,
+with $E^0_{s,t} = E_{s,t}$,
+and differentials $d^r$ going out of each $E^r_{s,t}$,
+each shifting the degrees by the same amount,
+which partition the grid into chain complexes\todo{picture}.
+Then, we stipulate that $E^{r+1}_{s,t}$ is the homology at $(s,t)$
+of the chain complex in page $r$ which contains $E^r_{s,t}$.
+
+At this point we will make an arbitrary decision:
+suppose that the diffentials in the $E^0$ page
+are the vertical differentials $d^0 = d^v$.
+It turns out that this provides us with naturally defined differentials
+$d^r\colon E^r_{s,t}\to E^r_{s-r,t+r-1}$; for example
+$d^1$ is the map on homology induced by the horizontal differentials $d^h$
+(note that each $d^r$ decreases the total degree by $1$,
+which is what we would like to see).
+Since we are assuming that $E_{s,t} = 0$ if $s$ or $t$ is negative
+and zeroes persist as we pass to later pages,
+the module at each spot $(s,t)$ stabilizes as we go far into the sequence;
+we call the limiting page $E^\infty$.
+
+\todo{words are hard (maybe define convergence earlier)}
+
+
+\subsection{Spectral sequence of a filtered complex}
+TODO
+
+(show the double complex thing
+as a special case of the filtered complex thing)
+
+\subsection{Spectral sequence of an exact couple}
+TODO
+
+(WTF is an exact couple?)
 
 \section{Examples and applications}
 
@@ -209,8 +301,9 @@ converge to the same thing (which fortunately was all zeroes).
 
 \begin{theorem}[Serre spectral sequence]
     \label{thm:serre-ss}
-    Let $F\into E\to B$ be a fibration with path connected base space $B$
-    whose fundamental group acts trivially on $H_*(F)$.
+    Let $F\into E\to B$ be a Serre fibration with
+    path connected base space $B$ whose fundamental group
+    acts trivially on $H_*(F)$.
     Then, there is a homological spectral sequence
     $E^2_{p,q} = H_p(B; H_q(F))$ converging to $H_*(E)$
     and a cohomological spectral sequence
@@ -239,6 +332,9 @@ or that there are a lot of zero rows/columns
 in just a few rows or columns).
 Note also that the triviality of the action of $\pi_1$
 often manifests as $X$ just being simply connected.
+(To rid yourself of the trivality condition,
+one must work with ``local coefficients,'' which
+at the moment I know know nothing about.)
 
 Here are a whole bunch of examples.
 
@@ -246,11 +342,10 @@ Here are a whole bunch of examples.
     \label{thm:hurewicz}
     Suppose that $X$ is $n$-connected,
     meaning the first $n$ homotopy groups of $X$ are zero.
-    Then, the first $n$ reduced homology groups (with integer coefficients)
+    Then, the first $n$ reduced homology groups with integer coefficients
     of $X$ are also zero, and
-    if $n > 0$, then $\pi_{n+1}(X,x_0)\cong H_{n+1}(X)$.
-    If $n = 0$, we instead have $\pi_1(X,x_0)^{\mathrm{ab}}\cong H_1(X)$,
-    the abelianization of the fundamental group.
+    $\pi_{n+1}(X,x_0)^{\mathrm{ab}}\cong H_{n+1}(X)$
+    (of course, the abelianization is superfluous for $n>0$).
 \end{theorem}
 
 \begin{proof}
@@ -308,10 +403,41 @@ Here are a whole bunch of examples.
     \todo{uh ok this is more complicated than i thought}
 \end{example}
 
+\subsection{Atiyah-Hirzebruch spectral sequence}
+TODO\todo{a-h ss}
+
+\subsection{Adams spectral sequence}
+TODO\todo{adams ss}
+
 
 
 \section{Practice}
-Courtesy of Ajay.
+
+\begin{exercise}
+    \label{exer:gysin-seq}
+    Show that for a sphere bundle
+    $S^n\into E\overset\pi\to B$ with $B$ simply connected,
+    there is an exact sequence of cohomology groups,
+    called the \vocab{Gysin sequence}.\todo{seq}
+
+    Moreover, show that the map \todo{map} is obtained by
+    cupping with a particular degree $n+1$
+    cohomology class only depending on $E$
+    (this is the \vocab{Euler class} of the vector bundle $E'\to B$
+    created by removing all the points at infinity of the fibers,
+    thinking of each fiber as a compactified $\RR^n$).\todo{is this kosher?}
+    Show also that the map \todo{map} is equal to $\pi^*$.
+\end{exercise}
+
+\begin{exercise}
+    \label{exer:wang-seq}
+    What does the cohomology Serre spectral sequence say
+    about a Serre fibration with base space $S^n$ for $n > 1$?
+    (You should get a long exact sequence
+    that looks like the Gysin sequence, called the \vocab{Wang sequence}.)
+\end{exercise}
+
+The following exercises are from Ajay.
 
 \begin{exercise}
     \label{exer:K-th-CPinfty}
@@ -368,6 +494,44 @@ Courtesy of Ajay.
     What about if $B$ is contractible, or $E$ is contractible?
 \end{exercise}
 
+\begin{exercise}
+    \label{exer:}
+    For each positive integer $m$, let $\oname{SL}_2(\mathbb{Z}) [m]$
+    be the subgroup of $\oname{SL}_2(\mathbb{Z})$ given by
+    matrices congruent to identity modulo $m$.
+    $\oname{SL}_2(\mathbb{Z})[m]$ is a finite-index
+    normal subgroup of $\oname{SL}_2(\mathbb{Z})$.
+    In fact, it is free for $m \geq 3$.
+
+    Let $V$ be a $\mathbb{Q}$-vector space.
+    Show that
+    \begin{equation*}
+	H^k(\oname{SL}_2(\mathbb{Z});V)
+	\cong H^k(\oname{SL}_2 (\mathbb{Z})[m] ; V)^
+	{\oname{SL}_2(\mathbb{Z}/m\mathbb{Z})}.
+    \end{equation*}
+    Conclude that
+    \[
+	H^0(\oname{SL}_2(\mathbb{Z});\mathbb{Z})
+	\cong \mathbb{Z},\qquad
+	H^1(\oname{SL}_2(\mathbb{Z});\mathbb{Z})
+	\cong 0,\qquad
+	H^2(\oname{SL}_2(\mathbb{Z});\mathbb{Z})
+	\cong \mathbb{Z}/12\mathbb{Z}
+    \]
+    and that $H^k(\oname{SL}_2(\mathbb{Z});\ZZ)$
+    is a finitely generated torsion group for all $k \geq 2$.
+    Some buzzwords that may be helpful
+    as you work through this challenge:
+    the Lyndon-Hochschild-Serre spectral sequence; Maschke's theorem.
+
+    (If you do work this out, congrats!!
+    You've computed the zeroth, first, and second cohomology groups
+    of the moduli space of elliptic curves,
+    and also worked out that the higher cohomology groups
+    are all finitely generated torsion groups,)
+\end{exercise}
+
 Some more, from Nick:
 
 \begin{exercise}
@@ -383,6 +547,9 @@ Some more, from Nick:
     and the two left derived functors
     which define $\tor^R_n(A,B)$ agree.
 \end{exercise}
+
+\todo{more purely algebraic exercises,
+as well as a-h ss and adams ss exercises}
 
 \end{document}
 
