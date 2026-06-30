@@ -12,6 +12,302 @@
 
 \section{Theory}
 
+\section{Examples and applications}
+
+\subsection{Some results in homological algebra}
+\begin{prop}
+    [Four lemmas]
+    \label{prop:four-lemmas}
+    Consider the following commutative diagram
+    of modules (or just in some abelian category),
+    in which the two rows are exact:
+    \begin{center}
+        \begin{tikzcd}
+	    A \arrow[d,"\alpha"]
+	    & B\arrow[l]\arrow[d,"\beta"] 
+	    & C\arrow[l]\arrow[d,"\gamma"]
+	    & D\arrow[l]\arrow[d,"\delta"] \\
+	    A' & B'\arrow[l] & C'\arrow[l] & D'\arrow[l]
+        \end{tikzcd}
+    \end{center}
+    \begin{enumerate}[(a)]
+        \ii If $\alpha$ and $\gamma$ are monomorphisms
+	and $\delta$ is a epimorphism, then $\beta$ is an monomorphism.
+	\ii If $\beta$ and $\delta$ are epimorphisms
+	and $\alpha$ is an monomorphism, then $\gamma$ is a epimorphism.
+    \end{enumerate}
+    (The diagram is drawn backwards to emphasize
+    how the double complex is oriented in the plane.)
+\end{prop}
+
+\begin{proof}
+    By extending via zeroes, we can view the given diagram
+    as a first quadrant double complex $E$ which is concentrated in
+    finitely many points of the grid,
+    so the corresponding (starting-at-horizontal or starting-at-vertical)
+    spectral sequences converge to the homology of its total complex.
+    If we take horizontal homology first to get to $E^1$,
+    then the $E^1$ (hence $E^\infty$) page is all zeroes,
+    so the spectral sequence must converge to zero.
+
+    Now we consider the two parts separately and
+    pass to $E^1$ by taking vertical homology.
+
+    (a) The $E^1$ page is
+    \begin{center}
+        \begin{tikzcd}
+	    0
+	    & \ker\beta \arrow[l,"d^1"']
+	    & 0\arrow[l,"d^1"']
+	    & \ker\delta \\
+	    \coker\alpha
+	    & \coker\beta
+	    & \coker\gamma & 0\arrow[llu,"d^2"']
+        \end{tikzcd}
+    \end{center}
+    From here on out, the differentials into and out of $\ker\beta$
+    are all zeroes: in $E^1$, the differentials
+    are the adjacent zero maps; in $E^2$, the incoming differential
+    is from $\coker\delta = 0$ and the outgoing one
+    goes outside the first quadrant; and in the remaining pages
+    the differentials come from or end at a place outside the first quadrant.
+    This means $\ker\beta$ persists in $E^\infty$,
+    which we have already discovered consists of all zeroes,
+    so $\ker\beta = 0$.
+
+    (b) Similarly, the $E^1$ page in this case is
+    \begin{center}
+        \begin{tikzcd}
+	    0 
+	    & \ker\beta 
+	    & \ker\gamma
+	    & \ker\delta \\
+	    \coker\alpha
+	    & 0
+	    & \coker\gamma\arrow[llu,"d^2"']\arrow[l,"d^1"']
+	    & 0\arrow[l,"d^1"']
+        \end{tikzcd}
+    \end{center}
+    and the differentials involving $\coker\gamma$ from here on out
+    are all zeroes, meaning $\coker\gamma$ persists to $E^\infty$,
+    hence is zero.
+\end{proof}
+
+\begin{exercise}
+    \label{exer:five-lemma}
+    Prove the five lemma using a similar spectral sequence argument.
+    Recall that the five lemma says that for a commutative diagram
+    \begin{center}
+        \begin{tikzcd}
+	    A \arrow[d,"\alpha"]
+	    & B\arrow[l]\arrow[d,"\beta"] 
+	    & C\arrow[l]\arrow[d,"\gamma"]
+	    & D\arrow[l]\arrow[d,"\delta"]
+	    & E\arrow[l]\arrow[d,"\delta"] \\
+	    A' & B'\arrow[l] & C'\arrow[l] & D'\arrow[l] & E'\arrow[l]
+        \end{tikzcd}
+    \end{center}
+    in which the two rows are exact,
+    $\beta$ and $\delta$ are isomorphisms,
+    $\delta$ is an epimorphism, and $\alpha$ is a monomorphism,
+    we have that $\gamma$ is an isomorphism.
+    (In real life this often just manifests as
+    the outer four maps being isomorphisms
+    implying that $\gamma$ is an isomorphism.)
+\end{exercise}
+
+% >>> apparently circular ?
+\begin{prop}
+    [Snake lemma]
+    \label{prop:snake-lemma}
+    Consider the commutative diagram of modules
+    \begin{center}
+        \begin{tikzcd}
+	    0
+	    & C\arrow[l]\arrow[d,"\gamma"] 
+	    & B\arrow[l,"g"']\arrow[d,"\beta"]
+	    & A\arrow[l,"f"']\arrow[d,"\alpha"]
+	    & \\
+	    & C' & B'\arrow[l,"g'"'] & A'\arrow[l,"f'"'] & 0\arrow[l]
+        \end{tikzcd}
+    \end{center}
+    in which the rows are exact.
+    There is an exact sequence
+    \begin{equation*}
+        \ker f\to \ker\alpha\to\ker\beta\to\ker\gamma
+	\overset\partial\too\coker\alpha\to\coker\beta\to\coker\gamma
+	\to\coker g'.
+    \end{equation*}
+\end{prop}
+
+\begin{proof}
+    As before, complete the diagram with zeroes
+    to make it into a first quadrant double complex $E$.
+    Taking horizontal homology gives an $E^1$ page of
+    \begin{equation*}
+        \begin{matrix}
+	    0 & 0 & \ker f\\
+	    \coker g' & 0 & 0
+        \end{matrix}
+    \end{equation*}
+    after which the spectral sequence stabilizes,
+    so this is equal to the $E^\infty$ page.
+
+    Taking vertical homology instead gives an $E^1$ page of
+    \begin{equation*}
+        \begin{matrix}
+	    \ker\gamma & \ker\beta & \ker\alpha\\
+	    \coker\gamma & \coker\beta & \coker\alpha
+        \end{matrix}
+    \end{equation*}
+    Passing to $E^2$ by taking horizontal homology
+    must kill $\ker\beta$ and $\coker\beta$
+    because in future pages they are not involved in nonzero differentials.
+    For a similar reason, the homology at $\ker\alpha$ must be $\ker f$
+    and the homology at $\coker\gamma$ must be $\coker g'$,
+    since the objects at those locations
+    also persist from $E^2$ to $E^\infty$.
+    This gives the entire exact sequence
+    except for the connecting homomorphism, which we consider now.
+    In the $E^2$ page the only nontrivial differential is a map
+    \begin{equation*}
+	d^2 \colon \ker d^1_{2,0} \to \coker d^1_{1,1},
+    \end{equation*}
+    which must be an isomorphism because the objects at these locations
+    must vanish in the $E^\infty$ page and they will not be
+    involved in nontrivial differentials in the future.
+    Define the connecting map $\partial$ as the composition
+    \begin{equation*}
+	\ker\gamma\onto\coker d^1_{1,1}
+	\overset\sim\too\ker d^1_{2,0}\into\coker\alpha,
+    \end{equation*}
+    inverting $d^2$ for the middle map.
+    The kernel of $\partial$ is that of the first map in the composition,
+    namely the image of the map $d^1_{1,1}\colon\ker\beta\to\ker\gamma$
+    in the exact sequence, so
+    $\ker\beta\to\ker\gamma\overset\partial\to\coker\alpha$
+    is exact at $\ker\gamma$.
+    Similarly, the image of $\partial$ is isomorphic to the kernel of the map
+    in the exact sequence $d^1_{2,0}\colon\coker\beta\to\coker\beta$,
+    proving exactness at $\coker\alpha$.
+\end{proof}
+
+\begin{exercise}
+    \label{exer:homology-LES}
+    Use essentially the same argument to show that
+    a short exact sequence of chain complexes
+    induces a long exact sequence in homology.
+\end{exercise}
+
+Note that in all the examples above,
+the total complex itself is essentially irrelevant;
+the only important thing is that
+both spectral sequences furnished by the double complex
+converge to the same thing (which fortunately was all zeroes).
+
+\subsection{Serre spectral sequence}
+
+\begin{theorem}[Serre spectral sequence]
+    \label{thm:serre-ss}
+    Let $F\into E\to B$ be a fibration with path connected base space $B$
+    whose fundamental group acts trivially on $H_*(F)$.
+    Then, there is a homological spectral sequence
+    $E^2_{p,q} = H_p(B; H_q(F))$ converging to $H_*(E)$
+    and a cohomological spectral sequence
+    $E_2^{p,q} = H^p(B; H^q(F; R))$ converging to $H^*(E)$
+    for some abelian group $R$.
+    Furthermore, if $R$ is a ring, there are
+    bilinear products $E^{p,q}_r\tensor E^{s,t}_r\to E^{p+q,s+t}_r$
+    on each page such that
+    \begin{enumerate}[(a)]
+        \ii Each $d_r$ is a derivation, namely
+	$d_r(xy) = (d_rx)y + (-1)^{p+q}xd_ry$ where $x\in E_r^{p+q}$.
+	Note that this means the product on page $r+1$
+	is induced by the product on page $r$.
+	\ii The product in $E^2$ is the standard cup product
+	with coefficients in the cohomology ring of the fiber.
+	\ii The cup product on $H^*(E)$
+	induces the products on the $E^\infty$ page.
+    \end{enumerate}
+\end{theorem}
+
+This is particularly useful when you can say something nice
+about some of the terms of the spectral sequence,
+such as knowing that $E$ is contractible
+or that there are a lot of zero rows/columns
+(perhaps the spectral sequence is concentrated
+in just a few rows or columns).
+Note also that the triviality of the action of $\pi_1$
+often manifests as $X$ just being simply connected.
+
+Here are a whole bunch of examples.
+
+\begin{theorem}[Hurewicz's theorem]
+    \label{thm:hurewicz}
+    Suppose that $X$ is $n$-connected,
+    meaning the first $n$ homotopy groups of $X$ are zero.
+    Then, the first $n$ reduced homology groups (with integer coefficients)
+    of $X$ are also zero, and
+    if $n > 0$, then $\pi_{n+1}(X,x_0)\cong H_{n+1}(X)$.
+    If $n = 0$, we instead have $\pi_1(X,x_0)^{\mathrm{ab}}\cong H_1(X)$,
+    the abelianization of the fundamental group.
+\end{theorem}
+
+\begin{proof}
+    (This proof was shown to me by my friend Nick.)
+
+    For $n = 0$ one can prove the theorem manually without
+    too much blood, sweat, or tears;
+    see Hatcher appendix 2A. To extend to larger $n$, we induct on $n$.
+    Suppose that $X$ is $n$-connected for $n\ge 1$
+    (notably, simply connected), and consider
+    the Serre spectral sequence for the path fibration
+    $\Omega X\to PX\to X$. Using the inductive hypothesis
+    and the fact that $\Omega X$ is $(n-1)$-connected,
+    the $E^2$ page of the Serre spectral sequence looks like
+    \begin{equation*}
+        \begin{matrix}
+            H_n(\Omega X) = \pi_n(\Omega X)\\
+	    0 & 0 & \cdots & 0 & 0\\
+	    \vdots & \vdots & \ddots & \vdots & \vdots\\
+	    0 & 0 & \cdots & 0 & 0\\
+	    \ZZ & 0 &\cdots& 0 & H_n(X) & H_{n+1}(X)
+        \end{matrix}
+    \end{equation*}
+    where rows $1$ through $n-1$ are all zeroes
+    because the coefficient group $H_k(\Omega X)$ is zero for $1\le k < n$.
+    Since the entire diagonal $p+q=n-2$ consists of zeroes,
+    $H_n(X)$ can only ever map into zero,
+    so it persists in the $E^\infty$ page;
+    since $PX$ is contractible, this means $H_n(X)$ must be zero.
+    To deal with $H_{n+1}(X)$, we note that
+    the entry above $H_n(X)$ is zero by hypothesis if $n > 1$,
+    and if $n = 1$ then this entry sits directly to the right of $\pi_n(X)$,
+    so there is no differential from it into $\pi_n(X)$.
+    Thus the only nontrivial differential involving
+    $H_{n+1}(X)$ or $\pi_n(X)$ is the one in page $n+1$,
+    where $H_{n+1}(X)$ maps into $\pi_n(X)$;
+    this is the only opportunity for these two to become zero
+    (which they must in $E^\infty$), which means that
+    \begin{equation*}
+	0\to H_{n+1}(X) \overset{d^{n+1}}\too \pi_n(\Omega X)\to 0
+    \end{equation*}
+    is exact, i.e. $H_{n+1}(X)\cong \pi_n(\Omega X) \cong \pi_{n+1}(X)$.
+\end{proof}
+
+\begin{example}
+    \label{ex:KG1-exact-seq}
+    Let $1\to A\to B\to C\to 1$ be a short exact sequence of groups.
+    Each homomorphism $B\to C$ can be realized by
+    a map $K(B,1)\to K(C,1)$. Converting this into a fibration\todo{elaborate}
+    and feeding it into the long exact sequence shows that
+    \begin{equation*}
+        1\to \pi_1(F)\to B\to C\to 1
+    \end{equation*}
+    is exact, so $\pi_1(F) = A$.
+    \todo{uh ok this is more complicated than i thought}
+\end{example}
+
 
 
 \section{Practice}
@@ -60,6 +356,7 @@ Courtesy of Ajay.
     \label{exer:loop-sphere}
     Compute the cohomology of $\Omega S^n$,
     the loop space of the $n$-sphere.
+    What is its cup product structure?
 \end{exercise}
 
 \begin{exercise}
@@ -69,6 +366,22 @@ Courtesy of Ajay.
     (For a spoiler of the answer, feed the fibration
     into the homotopy long exact sequence.)
     What about if $B$ is contractible, or $E$ is contractible?
+\end{exercise}
+
+Some more, from Nick:
+
+\begin{exercise}
+    \label{exer:universal-coefs}
+    Prove the various universal coefficient theorems.
+\end{exercise}
+
+\begin{exercise}
+    \label{exer:ext-tor-well-defined}
+    Show that $\ext$ and $\tor$ are well-defined.
+    That is, the two right derived functors
+    which define $\ext_R^n(A,B)$ agree
+    and the two left derived functors
+    which define $\tor^R_n(A,B)$ agree.
 \end{exercise}
 
 \end{document}
